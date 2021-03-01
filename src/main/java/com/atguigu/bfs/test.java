@@ -9,6 +9,38 @@ import java.util.Queue;
 
 public class test
 {
+    public int maxDistance(int[][] grid) {
+        if (grid.length == 0 || grid[0].length == 0) return -1;
+        Queue<int[]> q = new ArrayDeque<>();
+        int[] dx = {0,0,-1,1};
+        int[] dy = {1,-1,0,0};
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == 1){
+                    q.add(new int[]{i,j});
+                }
+            }
+        }
+
+        int[] point = null;
+        boolean hasOcean = false;
+        while (!q.isEmpty()){
+            point = q.poll();
+            for (int j = 0; j < 4; j++) {
+                int x = point[0] + dx[j];
+                int y = point[1] + dy[j];
+                if (x >= grid.length || x < 0 || y < 0 || y >= grid[0].length || grid[x][y] != 0){
+                    continue;
+                }
+                grid[x][y] = grid[point[0]][point[1]] + 1;
+                hasOcean = true;
+                q.add(new int[]{x,y});
+            }
+        }
+
+        if (point == null || !hasOcean) return -1;
+        return grid[point[0]][point[1]] - 1;
+    }
     /*public  boolean exist(char[][] board, String word) {
         char[] words = word.toCharArray();
         for (int i = 0; i < board.length; i++)

@@ -38,6 +38,9 @@ public class 机器人的运动范围offer13
         return count;*/
 
         //dfs
+        //因为只会向右向下深度遍历，所以，只需要visited就好
+        //但是，No79，不是，搜索过后可能还会遍历到这个点，所以不能直接搞个visited来记录，
+        //                                          应该在深度之前temp代替，之后再改回来。
         boolean[][] visited = new boolean[m][n];
         return dfs(0,0,m,n,k,visited);
 

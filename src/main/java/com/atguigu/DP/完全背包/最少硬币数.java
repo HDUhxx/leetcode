@@ -60,6 +60,7 @@ public class 最少硬币数
 
 
     //dp
+    //NO.322
     public int coinChange1(int[] coins, int amount) {
         int max = amount + 1;
         int[] dp = new int[amount + 1];

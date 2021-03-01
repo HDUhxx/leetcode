@@ -6,6 +6,8 @@ public class 堆成二叉树101
         return check(root,root);
     }
 
+
+
     private boolean check(TreeNode p, TreeNode q)
     {
         if (p == null && q == null){
@@ -17,7 +19,7 @@ public class 堆成二叉树101
         }
 
         return check(p.left,q.right) && check(p.right,q.left) && p.val == q.val;
-    }
+    } 
 
 
 }

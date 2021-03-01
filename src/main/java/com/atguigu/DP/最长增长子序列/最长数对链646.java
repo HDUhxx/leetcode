@@ -1,13 +1,22 @@
 package com.atguigu.DP.最长增长子序列;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 public class 最长数对链646
 {
     public static void main(String[] args)
     {
-
-        int[][] pairs = {{1,2},{2,3},{3,4}};
-        int longestChain = findLongestChain(pairs);
-        System.out.println(longestChain);
+        int[][] matrix = {{0, 30}, {15, 20}, {5, 10}, {-10, 20}};
+        //排序
+        Arrays.sort(matrix, (a, b) -> a[0] - b[0]);
+        //打印结果
+        for (int[] arr : matrix) {
+            for (int a : arr) {
+                System.out.print(a + " ");
+            }
+            System.out.println();
+        }
     }
 
 
@@ -16,7 +25,16 @@ public class 最长数对链646
             return 0;
         }
         int dp[] = new int[pairs.length];//dp[i]表示以pairs[i]结尾的最长数对链
+//        Arrays.sort(pairs, new Comparator<int[]>()
+//        {
+//            @Override
+//            public int compare(int[] o1, int[] o2)
+//            {
+//                return o1[0] - o2[0];
+//            }
+//        });
 
+        Arrays.sort(pairs, (o1, o2) -> o1[0] - o2[0]);
         dp[0] = 1;
         for (int i = 1; i < pairs.length; i++)
         {
@@ -39,4 +57,6 @@ public class 最长数对链646
 
         return res;
     }
+
+
 }

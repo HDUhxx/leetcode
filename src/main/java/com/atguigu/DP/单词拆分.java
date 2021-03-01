@@ -1,5 +1,6 @@
 package com.atguigu.DP;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -8,10 +9,15 @@ public class 单词拆分
 {
     public static void main(String[] args)
     {
-
+        List<String> list = new ArrayList<>();
+        list.add("leet");
+        list.add("code");
+        String s = "leetcode";
+        boolean b = wordBreak(s, list);
+        System.out.println(b);
     }
     // DP
-    public boolean wordBreak(String s, List<String> wordDict) {
+    public static boolean wordBreak(String s, List<String> wordDict) {
         int maxWordLength = 0;
         Set<String> wordSet = new HashSet<>(wordDict.size());
         for (String word : wordDict) {
@@ -34,5 +40,7 @@ public class 单词拆分
         }
         return dp[dp.length - 1];
     }
+
+
 }
 

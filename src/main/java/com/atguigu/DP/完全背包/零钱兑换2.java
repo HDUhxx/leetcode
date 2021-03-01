@@ -13,6 +13,12 @@ public class 零钱兑换2
 
     }
 
+    /**
+     *      零钱兑换1
+     * @param amount
+     * @param coins
+     * @return
+     */
     public int change1(int amount, int[] coins) {
         int [][] dp = new int[coins.length + 1][amount + 1];
         dp[0][0] = 1;
@@ -62,7 +68,6 @@ public class 零钱兑换2
         }
 
         for (int i = 1; i < len; i++) {
-
             // 从 coins[i] 开始即可
             for (int j = coins[i] ; j <= amount; j++) {
                 dp[j] += dp[j - coins[i]];

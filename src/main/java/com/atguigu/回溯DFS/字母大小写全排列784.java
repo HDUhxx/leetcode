@@ -42,5 +42,30 @@ public class 字母大小写全排列784
         }
     }
 
+    public int maxAreaOfIsland(int[][] grid) {
+        if (grid.length == 0 || grid[0].length == 0){
+            return 0;
+        }
+        int m = grid.length,n = grid[0].length;
+        int max = 0;
+        for (int i = 0; i < m; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                max = Math.max(max,dfs1(grid,i,j));
+            }
+        }
+        return max;
+    }
+
+    private int dfs1(int[][] grid,int i ,int j){
+        if (i >= grid.length || j >= grid[0].length || i < 0 || j < 0 || grid[i][j] != 1){
+            return 0;
+        }
+
+        grid[i][j] = 0;
+        return dfs1(grid,i + 1,j) + dfs1(grid,i - 1,j) + dfs1(grid,i,j + 1) + dfs1(grid,i,j - 1) + 1;
+    }
+
 
 }

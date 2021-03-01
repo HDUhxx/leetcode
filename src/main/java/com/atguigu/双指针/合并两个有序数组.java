@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 public class 合并两个有序数组
 {
+    //88
     public void merge(int[] nums1, int m, int[] nums2, int n) {
 
         //法二
@@ -30,6 +31,13 @@ public class 合并两个有序数组
             System.arraycopy(nums2, p2, nums1, p1 + p2, m + n - p1 - p2);
 
 
+        /**
+         *      * @param      src      the source array.
+         *      * @param      srcPos   starting position in the source array.
+         *      * @param      dest     the destination array.
+         *      * @param      destPos  starting position in the destination data.
+         *      * @param      length   the number of array elements to be copied.
+         */
         //法一
         System.arraycopy(nums2,0,nums1,m,n);
         Arrays.sort(nums1);

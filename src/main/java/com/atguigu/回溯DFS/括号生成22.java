@@ -1,5 +1,6 @@
 package com.atguigu.回溯DFS;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +36,12 @@ public class 括号生成22
         if (left > 0){
 
             dfs(s + "(",left - 1,right,res);
+            //或者
+            /*path.append("(");
+            dfs(path, left - 1, right, res);
+            path.deleteCharAt(path.length() - 1);*/
+
+
         }
 
         if (right > 0){

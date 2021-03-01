@@ -15,7 +15,7 @@ public class 最大二叉树654
         int max_i = max_i(nums, l, r);
         TreeNode root = new TreeNode( nums[max_i]);
         root.left = construct(nums,l,max_i);
-        root.right = construct(nums,max_i,r);
+        root.right = construct(nums,max_i + 1,r);
 
         return root;
 

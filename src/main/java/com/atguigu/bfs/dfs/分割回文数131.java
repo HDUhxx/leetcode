@@ -5,6 +5,8 @@ import java.util.List;
 
 public class 分割回文数131
 {
+
+
     public List<List<String>> partition(String s) {
         List<List<String>> res = new ArrayList<>();
         if (s.length() == 0){

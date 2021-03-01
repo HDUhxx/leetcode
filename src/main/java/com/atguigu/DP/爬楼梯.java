@@ -4,7 +4,7 @@ public class 爬楼梯
 {
     public static void main(String[] args)
     {
-        int i = climbStairs(3);
+        int i = climbStairs(11);
         System.out.println(i);
     }
 

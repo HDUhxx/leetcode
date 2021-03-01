@@ -1,10 +1,14 @@
 package com.atguigu.bfs;
 
+import com.sun.xml.internal.bind.v2.model.core.ID;
+
 import java.util.ArrayDeque;
 import java.util.Queue;
 
 public class 单词搜索79
 {
+
+
     public boolean exist(char[][] board, String word) {
         char[] words = word.toCharArray();
         for (int i = 0; i < board.length; i++)
@@ -31,9 +35,11 @@ public class 单词搜索79
             return true;
         }
 
+        //因为不能往回找，所以把当前点置为’。‘，
+        //dfs之后再变回来
         char temp = board[i][j];
         board[i][j] = '.';
-        boolean res = dfs(board,words,i + 1,j,index + 1) ||
+        boolean res =   dfs(board,words,i + 1,j,index + 1) ||
                         dfs(board,words,i - 1,j,index + 1) ||
                         dfs(board,words,i ,j + 1,index + 1) ||
                         dfs(board,words,i,j - 1,index + 1);
