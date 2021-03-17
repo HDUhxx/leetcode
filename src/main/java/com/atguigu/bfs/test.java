@@ -2,13 +2,95 @@ package com.atguigu.bfs;
 
 import org.junit.Test;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class test
 {
+
+    @Test
+    public void test2(){
+
+    }
+
+
+
+
+
+    private void dfs1(List<List<String>> res, List<String> q, String s, int begin) {
+        if (begin >= s.length()){
+            res.add(new ArrayList<>(q));
+            return;
+        }
+        for (int i = begin; i < s.length(); i++) {
+            if (isHuiwenChuan(s,begin,i)){
+                q.add(s.substring(begin,i + 1));
+                dfs1(res,q,s,i + 1);
+                q.remove(q.size() - 1);
+            }
+
+        }
+    }
+
+    private boolean isHuiwenChuan(String s ,int i ,int j){
+        char[] chars = s.toCharArray();
+        while (i <= j){
+            if (chars[i] != chars[j]){
+                return false;
+            }
+            i++;
+            j --;
+        }
+        return true;
+    }
+
+    public void solve(char[][] board) {
+        if (board.length == 0 || board[0].length == 0) return;
+        int m = board.length;
+        int n = board[0].length;
+
+        Queue<int[]> q = new ArrayDeque<>();
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                boolean isEdge = i == 0 || j == 0 || i == m - 1 || j == n - 1;
+                if (isEdge && board[i][j] == 'O'){
+                    q.add(new int[]{i,j});
+                    bfs(board,q);
+                }
+            }
+        }
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (board[i][j] == '#'){
+                    board[i][j] = 'O';
+                }else  if (board[i][j] == 'O'){
+                    board[i][j] = 'X';
+                }
+            }
+        }
+        return;
+    }
+
+    private void bfs(char[][] board, Queue<int[]> q) {
+        while (!q.isEmpty()){
+            for (int k = 0; k < q.size(); k++) {
+                int[] poll = q.poll();
+                int x = poll[0],y = poll[1];
+                if (x < 0 || y < 0 || x >= board.length || y >= board[0].length || board[x][y] != 'O'){
+                    continue;
+                }
+
+                board[x][y] = '#';
+
+                q.add(new int[]{x + 1,y});
+                q.add(new int[]{x - 1,y});
+                q.add(new int[]{x,y - 1});
+                q.add(new int[]{x,y + 1});
+            }
+        }
+
+    }
+
     public int maxDistance(int[][] grid) {
         if (grid.length == 0 || grid[0].length == 0) return -1;
         Queue<int[]> q = new ArrayDeque<>();

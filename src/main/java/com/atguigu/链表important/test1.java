@@ -5,6 +5,8 @@ import java.util.*;
 
 public class test1 {
 
+
+
     public int missingNumber(int[] nums) {
         int left = 0;
         int right = nums.length - 1;

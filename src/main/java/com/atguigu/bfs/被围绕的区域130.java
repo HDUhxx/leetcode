@@ -50,8 +50,6 @@ public class 被围绕的区域130
 
     private static void bfs(char[][] board, int i, int j, Queue<int[]> q)
     {
-
-
         while (!q.isEmpty()){
             for (int k = 0; k < q.size(); k++)
             {
@@ -67,8 +65,6 @@ public class 被围绕的区域130
                 q.add(new int[]{x,y + 1});
                 q.add(new int[]{x,y - 1});
             }
-
-
         }
     }
 

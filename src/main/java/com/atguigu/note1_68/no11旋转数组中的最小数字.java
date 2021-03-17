@@ -12,6 +12,9 @@ public class no11旋转数组中的最小数字 {
     public int minArray(int[] numbers) {
         int left = 0;
         int right = numbers.length - 1;
+        if (numbers[right] > numbers[left]){
+            return numbers[left];
+        }
         while (left < right){
             int mid = left + (right - left) / 2;
             if (numbers[mid] > numbers[right]){

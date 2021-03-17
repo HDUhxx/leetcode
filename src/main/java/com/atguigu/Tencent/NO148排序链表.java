@@ -2,7 +2,7 @@ package com.atguigu.Tencent;
 
 public class NO148排序链表 {
     /**
-     * 怎么对链表进行排序？
+     * 怎么对链表进行排序？(归并的思路)
      *      思路：1、找到链表的中间
      *            2、合并两个有序链表
      * @param head

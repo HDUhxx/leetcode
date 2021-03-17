@@ -7,6 +7,22 @@ import java.util.*;
 public class Test1
 {
 
+
+
+
+
+    private void dfs11(List<String> res, char[] chars, int i) {
+        if (i == chars.length){
+            res.add(new String(chars));
+            return;
+        }
+        dfs11(res,chars,i + 1);
+        if (Character.isLetter(chars[i])){
+            chars[i] ^= 1 << 5;
+            dfs11(res,chars,i + 1);
+        }
+    }
+
     public List<String> letterCombinations(String digits) {
         List<String> res = new ArrayList<>();
         if (digits.length() ==  0) return res;

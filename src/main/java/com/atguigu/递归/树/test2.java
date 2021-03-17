@@ -4,6 +4,65 @@ import java.util.*;
 
 public class test2 {
 
+    public static void main(String[] args) {
+        double[] arr = new double[20];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = 1.4 * i * 5 + 0.8;
+            System.out.print(arr[i] + ",");
+        }
+
+    }
+
+    public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> path = new ArrayList<>();
+        dfs1(res,path,root,targetSum);
+        return res;
+    }
+
+    private void dfs1(List<List<Integer>> res, List<Integer> path, TreeNode root, int targetSum) {
+        if (root == null) return;
+        targetSum -= root.val;
+        if (root.left == null && root.right == null){
+            if (targetSum == 0){
+                path.add(root.val);
+                res.add(new ArrayList<>(path));
+                path.remove(path.size() - 1);
+            }
+            return;
+        }
+
+        path.add(root.val);
+        dfs1(res,path,root.left,targetSum);
+        dfs1(res,path,root.right,targetSum);
+        path.remove(path.size() - 1);
+
+    }
+
+
+    public TreeNode sortedListToBST(ListNode head) {
+        if (head == null){
+            return null;
+        }
+        if (head.next == null) return new TreeNode(head.val);
+
+        ListNode fast = head.next;
+        ListNode slow = head;
+        ListNode pre = slow;
+        while (fast != null && fast.next != null){
+            fast = fast.next.next;
+            pre = slow;
+            slow = slow.next;
+        }
+
+        pre.next = null;
+        TreeNode root = new TreeNode(slow.val);
+        root.left = sortedListToBST(head);
+        root.right = sortedListToBST(slow.next);
+
+        return root;
+    }
+
 
 
     public boolean verifyPostorder(int[] postorder) {

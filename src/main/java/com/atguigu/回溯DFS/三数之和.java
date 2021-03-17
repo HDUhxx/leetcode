@@ -11,57 +11,28 @@ public class 三数之和
 
     //NO.15 使用回溯会超出时间限制
     public List<List<Integer>> threeSum(int[] nums) {
-        List<List<Integer>> res = new ArrayList<>();
-        if (nums.length < 3){
-            return res;
+         List<List<Integer>> res = new ArrayList<>();
+         if (nums == null || nums.length < 3) return res;
+         Arrays.sort(nums);
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > 0) break;
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+            int left = i + 1;
+            int right = nums.length - 1;
+            while (left < right){
+                int sum = nums[i] + nums[left] + nums[right];
+                if (sum == 0){
+                    res.add(Arrays.asList(nums[i],nums[left],nums[right]));
+                    while (left < right && nums[left] == nums[left + 1]) left ++;
+                    while (left < right && nums[right] == nums[right - 1]) right --;
+                    left ++;
+                    right --;
+                }
+                else if (sum < 0) left ++;
+                else if (sum > 0) right --;
+            }
         }
-
-        Arrays.sort(nums);
-        List<Integer> path = new ArrayList<>();
-        boolean[] used  = new boolean[nums.length];
-        dfs(nums,used,path,res);
-
-        for(List arrayList : res){
-            Collections.sort(arrayList);
-        }
-
-        HashSet<List<Integer>> hashSet = new HashSet<>(res);
-        res.clear();
-        res.addAll(hashSet);
         return res;
     }
-
-    private void dfs(int[] nums, boolean[] used, List<Integer> path, List<List<Integer>> res)
-    {
-        if (path.size() == 3){
-            int sum = 0;
-            for (int i = 0; i < path.size(); i++)
-            {
-                sum += path.get(i);
-            }
-            if (sum == 0){
-                res.add(new ArrayList<>(path));
-                return;
-            }else {
-                return;
-            }
-
-        }
-
-        for (int i = 0; i < nums.length; i++)
-        {
-            if (!used[i])
-            {
-                if (i > 0 && nums[i] == nums[i - 1] && !used[i - 1])
-                {
-                    continue;
-                }
-                path.add(nums[i]);
-                used[i] = true;
-                dfs(nums, used, path, res);
-                used[i] = false;
-                path.remove(path.size() - 1);
-            }
-        }
-    }
+    
 }
