@@ -31,10 +31,10 @@ public class 顺时针打印矩阵29
             {
                 res[k ++] = matrix[bottom][i];
             }
-            bottom ++;
+            bottom --;
             for (int i = bottom; i >= top && left <= right; i--)
             {
-                res[k ++] = matrix[left][i];
+                res[k ++] = matrix[i][left];
             }
             left ++;
         }

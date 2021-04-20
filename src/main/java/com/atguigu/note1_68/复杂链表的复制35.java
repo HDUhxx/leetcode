@@ -1,23 +1,22 @@
 package com.atguigu.note1_68;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class 复杂链表的复制35
 {
-    class Node {
-        int val;
-        Node next;
-        Node random;
 
-        public Node(int val) {
-            this.val = val;
-            this.next = null;
-            this.random = null;
-        }
-    }
-
-    //再想想
+    /** 迭代
+     *  map key 存放原来的Node
+     *      value 存放复制的Node
+     *
+     *  第一个循环存放Node
+     *  第二个循环复制 next、random
+     * @param head
+     * @return
+     */
     public Node copyRandomList(Node head) {
         Node cur = head;
         Map<Node,Node> map = new HashMap<>();
@@ -35,5 +34,28 @@ public class 复杂链表的复制35
 
         return map.get(head);
 
+    }
+
+
+    /**
+     *      递归
+     * @param head
+     * @return
+     */
+    public Node copyRandomList1(Node head) {
+        Map<Node,Node> map = new HashMap<>();
+        return dfs1(head,map);
+    }
+
+    private Node dfs1(Node head, Map<Node, Node> map) {
+        if (head == null) return null;
+        if (map.containsKey(head)){
+            return map.get(head);
+        }
+        Node node = new Node(head.val);
+        map.put(head,node);
+        node.next = dfs1(head.next,map);
+        node.random = dfs1(head.random,map);
+        return node;
     }
 }

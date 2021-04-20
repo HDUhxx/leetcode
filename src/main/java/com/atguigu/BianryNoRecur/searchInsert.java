@@ -21,7 +21,7 @@ public class searchInsert
             //最后2个的时候左边向右或者右边向左
             if(nums[mid] < target){
                 l = mid + 1;
-            //下一轮搜索空间为[left,mid]
+                //下一轮搜索空间为[left,mid]
             }else{
                 r = mid;
             }

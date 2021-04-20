@@ -22,6 +22,4 @@ public class 删除倒数第n个节点
         slow.next = slow.next.next;
         return pre.next;
     }
-
-
 }

@@ -5,6 +5,25 @@ import java.util.*;
 
 public class test1 {
 
+    public ListNode rotateRight(ListNode head, int k) {
+        if (head == null || head.next == null) return head;
+        int len = 1;
+        ListNode tail = head;
+        while (tail.next != null){
+            tail = tail.next;
+            len ++;
+        }
+        
+        tail.next = head;
+        k = k % len;
+        for (int i = 0; i < len - k; i++) {
+            tail = tail.next;
+        }
+
+        ListNode res = tail.next;
+        tail.next = null;
+        return res;
+    }
 
 
     public int missingNumber(int[] nums) {

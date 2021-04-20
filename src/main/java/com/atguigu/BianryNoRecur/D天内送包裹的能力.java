@@ -4,10 +4,12 @@ public class D天内送包裹的能力
 {
     public static void main(String[] args)
     {
-        int[] weights = {1,2,3,4,5,6,7,8,9,10};
-        int d = 5;
+        int[] weights = {3,3,3,3,3,3};
+        int d = 2;
         int i = shipWithinDays(weights, d);
         System.out.println(i);
+
+//        canCap(weights,2,9);
     }
 
     public static int shipWithinDays(int[] weights, int D) {
@@ -37,10 +39,7 @@ public class D天内送包裹的能力
         for (int i = 0; i < weights.length; i++)
         {
             sum += weights[i];
-             if (sum == mid){
-                day ++;
-                sum = 0;
-            }else if (sum > mid){
+            if (sum > mid){
                 day ++;
                 sum = weights[i];
             }
