@@ -5,221 +5,187 @@ import java.util.*;
 
 public class Test1 {
     public static void main(String[] args) {
-        Test1 t = new Test1();
-        t.mySqrt(8);
+        int[] nums = {-10,-3,0,5,9};
+        ListNode construct = ListNode.construct(nums);
+        sortedListToBST(construct);
     }
 
-    public int mySqrt(int x) {
-        if (x == 0) return 0;
-        int l = 1,r = x/2;
-        while (l < r){
-            long mid = l + (r - l)/2;
-            if (mid * mid < x){
-                l = (int) mid;
-            }else if (mid * mid > x){
-                r = (int) (mid - 1);
-            }
-        }
-
-        return l;
-    }
-
-    public double myPow(double x, int n) {
-        if (n == 0) return 1;
-        if (n == 1) return x;
-        if (n == -1) return 1/x;
-        double half = myPow(x,n/2);
-        double rest = myPow(x,n % 2);
-        return half * half * rest;
-    }
-
-    public int[] productExceptSelf(int[] nums) {
-        int[] res = new int[nums.length];
-        int left = 1;
-        for (int i = 0; i < nums.length; i++) {
-            res[i] = left;
-            left *= nums[i];//左边的乘积
-        }
-
-        int right = 1;
-        for (int i = nums.length - 1 ;i >= 0; i--) {
-            res[i] *= right;//右边的乘积
-            right *= nums[i];
-        }
-
-        return res;
-    }
-
-    public ListNode insertionSortList(ListNode head) {
-        if (head == null || head.next == null) return head;
-        ListNode cur = insertionSortList(head.next);
-        ListNode pre = new ListNode(-1,cur);
-        ListNode preHead = pre;
-        while (cur != null){
-            if (head.val > cur.val){
-                cur = cur.next;
+    public ListNode removeElements(ListNode head, int val) {
+        if(head == null) return head;
+        ListNode PreHead = new ListNode(0,head);
+        ListNode pre = PreHead;
+        while (head != null){
+            if (head.val == val){
+                pre.next = head.next;
+            }else {
                 pre = pre.next;
-            }else {
-                break;
             }
+            head = head.next;
         }
-        pre.next = head;
-        pre.next.next = cur;
-
-        return preHead.next;
+        return PreHead.next;
     }
 
-
-
-
-    public boolean canPartition(int[] nums) {
-        if (nums.length < 2) return false;
-        int sum = 0;
-        for (int i = 0; i < nums.length; i++) {
-            sum += nums[i];
+    public void rotate(int[] nums, int k) {
+        k %= nums.length;
+        int i = 0,j = nums.length - 1;
+        while (i < j){
+            int temp = nums[i];
+            nums[i] = nums[j];
+            nums[j] = temp;
+            i ++;
+            j --;
         }
-        if (sum % 2 == 0) return false;
-        int target = sum / 2;
-        for (int i = 0; i < nums.length; i++) {
-            if (target == nums[i]) return true;
-            if (target < nums[i]) return false;
+        i = 0;
+        j = k - 1;
+        while (i < j){
+            int temp = nums[i];
+            nums[i] = nums[j];
+            nums[j] = temp;
+            i ++;
+            j --;
         }
-
-        boolean[] dp = new boolean[target + 1];
-        for (int i = 0; i < nums.length; i++) {
-            for (int j = target; j >= 0; j--) {
-                if (j >= nums[i]){
-                    dp[j] = dp[j] || dp[j - nums[i]];
-                }
-            }
-        }
-
-        return dp[target];
-    }
-
-    public int rob(TreeNode root) {
-        if (root == null) return 0;
-        int money = root.val;
-        if (root.left != null){
-             money +=  rob(root.left.left) + rob(root.left.right);
-        }
-        if (root.right != null){
-            money += rob(root.right.left) + rob(root.right.right);
-        }
-
-        return Math.max(money,rob(root.left) + rob(root.right));
-    }
-
-    public int longestCommonSubsequence(String text1, String text2) {
-        char[] chars = text1.toCharArray();
-        char[] chars1 = text2.toCharArray();
-        if (chars.length == 0 || chars1.length == 0) return 0;
-        int[][] dp = new int[chars.length + 1][chars1.length + 1];
-        dp[0][0] = 0;
-        for (int i = 1; i < chars.length + 1; i++) {
-            for (int j = 1; j < chars1.length + 1; j++) {
-                if (chars[i - 1] == chars[j - 1]){
-                    dp[i][j] = dp[i - 1][j - 1] + 1;
-                }else {
-                    dp[i][j] = Math.max(dp[i - 1][j],dp[i][j - 1]);
-                }
-            }
-        }
-
-        return dp[chars.length][chars1.length];
-    }
-
-
-    public int maxProduct(int[] nums) {
-        if (nums.length == 1) return nums[0];
-
-        int[][] dp = new int[nums.length][2];
-        dp[0][0] = nums[0];
-        dp[0][1] = nums[0];
-
-        for (int i = 1; i < nums.length; i++) {
-            if (nums[i] > 0){
-                dp[i][0] = Math.min(dp[i - 1][0] * nums[i],nums[i]);
-                dp[i][1] = Math.max(dp[i - 1][1] * nums[i],nums[i]);
-            }else {
-                dp[i][0] = Math.min(dp[i - 1][1] * nums[i],nums[i]);
-                dp[i][1] = Math.max(dp[i - 1][0] * nums[i],nums[i]);
-            }
-        }
-
-        int res = nums[0];
-        for (int i = 0; i < dp.length; i++) {
-            res = Math.max(res,dp[i][1]);
-        }
-        return res;
-    }
-
-    public boolean isSubStructure(TreeNode A, TreeNode B) {
-        if (A == null || B == null){
-            return false;
-        }
-
-        return isSubStructure(A.left,B) || isSubStructure(A.right,B) || isSub(A,B);
-    }
-
-    private boolean isSub(TreeNode a, TreeNode b) {
-        if (b == null){
-            return true;
-        }
-        if (a == null){
-            return false;
-        }
-
-
-        return a.val == b.val && isSub(a.left,b.left) && isSub(a.right,b.right);
     }
 
     public int pathSum(TreeNode root, int sum) {
         if (root == null) return 0;
-
-        return pathSum(root.left,sum) + pathSum(root.right,sum) + help(root,sum);
+        return dfs2(root,sum) + pathSum(root.left,sum) + pathSum(root.right,sum);
     }
 
-    private int help(TreeNode root, int sum) {
+    private int dfs2(TreeNode root, int sum) {
         if (root == null){
             return 0;
         }
+
         sum -= root.val;
-        int count = sum == 0 ? 1 : 0;
-        count += help(root.left,sum);
-        count += help(root.right,sum);
-        return count;
+        int res =sum == 0 ? 1 : 0;
+        dfs2(root.left,sum);
+        dfs2(root.right,sum);
+        return res;
     }
 
-    /*public ListNode sortList(ListNode head) {
-        if (head == null || head.next == null) return head;
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        if (root == null){
+            return res;
+        }
+        Queue<TreeNode> q = new ArrayDeque<>();
+        q.add(root);
+        while (!q.isEmpty()){
+            int size = q.size();
+            int right = 0;
+            for (int i = 0; i < size; i++) {
+                TreeNode poll = q.poll();
+                right = poll.val;
+                if (poll.left != null) q.add(poll.left);
+                if (poll.right != null) q.add(poll.right);
+            }
+            res.add(right);
+        }
+        return res;
+    }
+
+    int sum = 0;
+    public int sumNumbers(TreeNode root) {
+        dfs1(root,0);
+        return sum;
+    }
+
+    private void dfs1(TreeNode root, int i) {
+        if (root == null){
+            return;
+        }
+        i  = i * 10 + root.val;
+        if (root.left == null && root.right == null){
+            sum += i;
+            return;
+        }
+        dfs1(root.left,i);
+        dfs1(root.right,i);
+    }
+
+    public Node connect(Node root) {
+        if (root == null) return root;
+        if (root.left != null){
+            root.left.next = root.right;
+            root.right.next = root.next == null ? null : root.next.left;
+            connect(root.left);
+            connect(root.right);
+        }
+        return root;
+    }
+
+
+
+    public static TreeNode sortedListToBST(ListNode head) {
+        if (head == null) return null;
+        if (head.next == null) return new TreeNode(head.val);
+        ListNode pre = new ListNode(0,head);
+        ListNode fast = head;
         ListNode slow = head;
-        ListNode fast = head.next;
-        while (fast != null && fast.next != null){
+        while (true){
+            if (fast == null || fast.next == null) break;
             fast = fast.next.next;
             slow = slow.next;
+            pre = pre.next;
         }
+        TreeNode root = new TreeNode(slow.val);
+        root.right = sortedListToBST(slow.next);
+        pre.next =  null;
+        root.left = sortedListToBST(head);
+        return root;
+    }
 
-        ListNode right = sortList(slow.next);
-        slow.next = null;
-        ListNode left = sortList(head);
-
-        ListNode res = new ListNode(-1);
-        ListNode h = res;
-        while (left != null && right != null){
-            if (left.val < right.val){
-                h.next = left;
-                left = left.next;
-            }else {
-                h.next = right;
-                right = right.next;
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (root == null) return res;
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        queue.add(root);
+        while (!queue.isEmpty()){
+            List<Integer> path = new ArrayList<>();
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode poll = queue.poll();
+                path.add(poll.val);
+                if (poll.left != null) queue.add(poll.left);
+                if (poll.right != null) queue.add(poll.right);
             }
-            h = h.next;
+            res.add(0,new ArrayList<>(path));
         }
-        h.next = left == null ? right : left;
-        return res.next;
+        return res;
+    }
 
-    }*/
+    long pre = Integer.MIN_VALUE;
+    public boolean isValidBST(TreeNode root) {
+        if (root == null) return true;
+
+        if (!isValidBST(root.left)){
+            return false;
+        }
+        if (root.val <= pre){
+            return false;
+        }
+        pre = root.val;
+        if (!isValidBST(root.right)){
+            return false;
+        }
+        return true;
+    }
+
+    public int[] productExceptSelf(int[] nums) {
+        int[] res = new int[nums.length];
+        int n = 1;
+        for (int i = 0; i < nums.length; i++) {
+            res[i] = n;
+            n *= nums[i];
+        }
+        n = 1;
+        for (int i = nums.length - 1; i >= 0; i--) {
+            res[i] *= n;
+            res[i] = nums[i];
+        }
+        return res;
+    }
+
 
     public String longestPalindrome(String s) {
         if (s.length() < 2) return s;

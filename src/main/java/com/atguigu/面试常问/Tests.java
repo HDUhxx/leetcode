@@ -2,6 +2,8 @@ package com.atguigu.面试常问;
 
 import org.junit.Test;
 
+import java.util.Scanner;
+
 public class Tests {
 
     public static void main(String[] args) {
@@ -11,6 +13,8 @@ public class Tests {
                 System.out.print(doubles[i][j]);
             }
         }
+        Scanner scanner = new Scanner(System.in);
+        int i = scanner.nextInt();
     }
 
 

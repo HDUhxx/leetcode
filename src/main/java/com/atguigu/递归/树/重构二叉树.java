@@ -16,6 +16,10 @@ public class 重构二叉树
                 node.left = reConstuct(Arrays.copyOfRange(pre,1,i + 1),Arrays.copyOfRange(in,0,i));
                 node.right = reConstuct(Arrays.copyOfRange(pre,i + 1,pre.length),Arrays.copyOfRange(in,i + 1,in.length));
             }
+            /*if (pre[i] > pre[0]){
+                node.left = reConstuct(Arrays.copyOfRange(pre,1,i ),Arrays.copyOfRange(in,0,i - 1));
+                node.right = reConstuct(Arrays.copyOfRange(pre,i,pre.length),Arrays.copyOfRange(in,i,in.length));
+            }*/
         }
 
         return node;

@@ -4,41 +4,58 @@ import java.util.*;
 
 public class test2 {
 
-
-
-    public static void main(String[] args) {
-        double[] arr = new double[20];
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = 1.4 * i * 5 + 0.8;
-            System.out.print(arr[i] + ",");
-        }
-
-    }
-
-    public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
-        List<List<Integer>> res = new ArrayList<>();
-        List<Integer> path = new ArrayList<>();
-        dfs1(res,path,root,targetSum);
-        return res;
-    }
-
-    private void dfs1(List<List<Integer>> res, List<Integer> path, TreeNode root, int targetSum) {
-        if (root == null) return;
-        targetSum -= root.val;
+    public int rob(TreeNode root) {
+        if (root == null) return 0;
         if (root.left == null && root.right == null){
-            if (targetSum == 0){
-                path.add(root.val);
-                res.add(new ArrayList<>(path));
-                path.remove(path.size() - 1);
-            }
-            return;
+            return root.val;
         }
+        int two = rob(root.left) + rob(root.right);
+        int one = root.val;
+        if (root.left != null){
+            one += rob(root.left.left) + rob(root.left.right);
+        }
+        if (root.right != null){
+            one += rob(root.right.left) + rob(root.right.right);
+        }
+        return Math.max(one,two);
+    }
 
-        path.add(root.val);
-        dfs1(res,path,root.left,targetSum);
-        dfs1(res,path,root.right,targetSum);
-        path.remove(path.size() - 1);
+    List<Integer> list = new ArrayList<>();
 
+    public void rotate(int[] nums, int k) {
+        k %= nums.length;
+        reverse(nums,0,nums.length - 1);
+        reverse(nums,0,k - 1);
+        reverse(nums,k,nums.length - 1);
+    }
+
+    private void reverse(int[] nums,int left,int right){
+        int temp = 0;
+        while (left < right){
+            temp = nums[left];
+            nums[left] = nums[right];
+            nums[right] = temp;
+            left ++;
+            right --;
+        }
+    }
+
+    public int pathSum(TreeNode root, int sum) {
+        if (root == null){
+            return 0;
+        }
+        return pathSum(root.left,sum) + pathSum(root.right,sum) + dfs1(root,sum);
+    }
+
+    private int dfs1(TreeNode root, int sum) {
+        if (root == null){
+            return 0;
+        }
+        sum -= root.val;
+        int count = sum == 0 ? 1 : 0;
+        count += dfs1(root.left,sum);
+        count += dfs1(root.right,sum);
+        return count;
     }
 
 

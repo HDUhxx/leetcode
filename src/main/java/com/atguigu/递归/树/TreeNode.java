@@ -11,7 +11,7 @@ public  class TreeNode {
 
     public static TreeNode constructTree(Integer[] nums){
         if (nums.length == 0) return new TreeNode(0);
-        Deque<TreeNode> nodeQueue = new LinkedList<TreeNode>();
+        Deque<TreeNode> nodeQueue = new LinkedList<>();
 
         TreeNode root = new TreeNode(nums[0]);
         nodeQueue.offer(root);

@@ -20,7 +20,6 @@ class Singleton{
     //同时保证了效率, 推荐使用
     public static synchronized Singleton getSingleton(){
         if (singleton == null){
-
             synchronized (Singleton.class){//1、只有一个线程进入
                 if (singleton == null){//2、后面进入的不会创建新的对象
                     singleton = new Singleton();

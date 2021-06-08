@@ -10,6 +10,51 @@ import java.util.*;
 
 public class test1{
 
+
+    public String reverseWords(String s) {
+        String[] strings = s.trim().split(" ");
+        StringBuilder sb = new StringBuilder();
+        for (int i = strings.length - 1; i >= 0 ; i--) {
+            if (strings[i].equals("")){
+                continue;
+            }
+            sb.append(strings[i] + " ");
+        }
+        return sb.toString().trim();
+    }
+
+    int res,k;
+    public int kthLargest(TreeNode root, int k) {
+        this.k = k;
+        dfs3(root);
+        return res;
+    }
+
+    private void dfs3(TreeNode root) {
+        if (root == null){
+            return;
+        }
+
+        dfs3(root.right);
+        if (--k == 0){
+            this.res = root.val;
+            return;
+        }
+        dfs3(root.left);
+    }
+
+
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode a = headA;
+        ListNode b = headB;
+        while (a != b){
+            a = a == null ? headB : a.next;
+            b = b == null ? headA : b.next;
+        }
+
+        return a;
+    }
+
     public int lengthOfLongestSubstring(String s) {
         if (s.length() == 0) return 0;
         Map<Character,Integer> map = new HashMap<>();

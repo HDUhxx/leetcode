@@ -1,12 +1,132 @@
 package com.atguigu.hot100;
 
-import java.nio.file.Path;
 import java.util.*;
 
-import static org.apache.commons.lang3.ArrayUtils.reverse;
-
 public class Tests {
+    public static void main(String[] args) {
+        int[] arr = {1,1,2,2,1,};
 
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i]);
+        }
+    }
+
+    public String intToRoman(int num) {
+        int[] nums = {1000,900,500,400,100,90,50,40,10,9,5,4,1};
+        String[] strs = {"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
+        StringBuilder sb = new StringBuilder();
+        int index = 0;
+        while (index < 13){
+            while (num >= nums[index]){
+                sb.append(strs[index]);
+                num -= nums[index];
+            }
+            index ++;
+        }
+        return sb.toString();
+    }
+
+    public int romanToInt(String s) {
+        Map<Character,Integer> map = new HashMap<>();
+        map.put('I',1);
+        map.put('V',5);
+        map.put('X',10);
+        map.put('L',50);
+        map.put('C',100);
+        map.put('D',500);
+        map.put('M',1000);
+
+        int res = 0;
+        for (int i = 1; i < s.length(); i++) {
+            if (map.get(s.charAt(i)) <= map.get(s.charAt(i - 1))){
+                res += s.charAt(i - 1);
+            }else {
+                res -= s.charAt(i - 1);
+            }
+        }
+        res += s.charAt(s.length() - 1);
+        return res;
+    }
+
+
+    public void gameOfLife(int[][] board) {
+        Arrays.sort(board,(int[] a,int[] b) -> {
+            return a[0] - b[0];
+        });
+        System.out.println(board.toString());
+        if (board.length == 0 || board[0].length == 0) return;
+        int[] dx = {1,1,1,0,0,-1,-1,-1};
+        int[] dy = {1,0,-1,1,-1,1,0,-1};
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                int count = 0;
+                for (int k = 0; k < 8; k++) {
+                    int x = i + dx[k];
+                    int y = j + dy[k];
+                    if (x >= 0 && x < board.length && y >= 0 && y < board[0].length){
+                        count += board[x][y] & 1;
+                    }
+                }
+                if ((board[i][j] & 1) == 1){
+                    if (count == 2 || count == 3){
+                        board[i][j] = 3;
+                    }
+                }
+                if (board[i][j] == 0 && count == 3){
+                    board[i][j] = 2;
+                }
+            }
+        }
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                board[i][j] >>= 1;
+            }
+        }
+    }
+
+    public boolean isPowerOfThree(int n) {
+        if (n == 0){
+            return false;
+        }
+        if (n == 1) {
+            return true;
+        }
+        return n%3 == 0 && isPowerOfThree(n/3);
+    }
+    /*public int[] intersect(int[] nums1, int[] nums2) {
+        Map<Integer,Integer> map1 = new HashMap<>();
+        Map<Integer,Integer> map2 = new HashMap<>();
+        for (int i = 0; i < nums1.length; i++) {
+            map1.put(nums1[i],map1.getOrDefault(nums1[i],0) + 1);
+        }
+        for (int i = 0; i < nums2.length; i++) {
+            map2.put(nums2[i],map2.getOrDefault(nums2[i],0) + 1);
+        }
+        List<Integer> list = new ArrayList<>();
+        for (Integer i : map1.keySet()){
+            if (map2.get(i) != null){
+                for (int j = 0; j < Math.min(map1.get(i), map2.get(i)); j++) {
+                    list.add(i);
+                }
+            }
+        }
+        int[] res = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            res[i] = list.get(i);
+        }
+        return res;
+    }*/
+
+    public int titleToNumber(String columnTitle) {
+        if (columnTitle.length() == 0) {
+            return 0;
+        }
+        int res = 0;
+        for (char c : columnTitle.toCharArray()){
+            res = res * 26 + c-'A' + 1;
+        }
+        return res;
+    }
 
     public String reverseWords(String s) {
         String[] s1 = s.trim().split(" ");
